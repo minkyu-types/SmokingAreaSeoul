@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.architecture.smokingarea">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +13,8 @@
         android:theme="@style/Theme.SmokingArea">
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="API키"/>
+            android:name="com.kakao.sdk.AppKey"
+            android:value="12e4c31b06b116540e88893564ad44f1"/>
 
         <activity android:name=".StartActivity"></activity>
         <activity android:name=".MainActivity">

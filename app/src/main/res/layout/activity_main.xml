@@ -9,7 +9,8 @@
     <fragment
         android:id="@+id/googleMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:name="com.architecture.smokingarea.MapFragment"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/searchButton"
