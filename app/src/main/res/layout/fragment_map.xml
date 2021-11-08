@@ -6,6 +6,7 @@
     tools:context=".MapFragment">
 
     <com.google.android.gms.maps.MapView
+        android:id="@+id/kakaoMapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
