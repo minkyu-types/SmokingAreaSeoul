@@ -49,6 +49,9 @@ dependencies {
 
     implementation files('libs/libDaumMapAndroid.jar')
 
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs/libDaumMapAndroid.jar')
+
     testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
