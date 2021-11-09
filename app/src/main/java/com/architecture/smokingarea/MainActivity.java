@@ -2,57 +2,47 @@ package com.architecture.smokingarea;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import net.daum.android.map.MapViewEventListener;
+import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
-    private MapView kakaoMap = null;
+public class MainActivity extends Permission {
 
     public MainActivity(){
-    }
-
-    private void getDebugHashKey(){
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            if (packageInfo == null)
-                Log.e("KeyHash", "KeyHash:null");
-            else{
-                for (Signature signature : packageInfo.signatures) {
-                    MessageDigest md = MessageDigest.getInstance("SHA");
-                    md.update(signature.toByteArray());
-                    Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-                }
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
     }
 
         @Override
@@ -60,10 +50,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MapView kakaoMap = new MapView(this);
+        kakaoMap = new MapView(this);
 
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMap);
+        mapViewContainer = (ViewGroup) findViewById(R.id.kakaoMap);
         mapViewContainer.addView(kakaoMap);
+
+        kakaoMap.setMapViewEventListener(this);
+        kakaoMap.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+
+        if(!checkLocationServicesStatus()){
+            showDialogForLocationServiceSetting();
+        } else {
+            checkRunTimePermission();
+        }
     }
 
     @Override
@@ -96,5 +95,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mapViewContainer.removeAllViews();
     }
 }
