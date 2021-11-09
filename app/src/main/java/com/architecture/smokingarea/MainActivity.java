@@ -40,12 +40,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
-public class MainActivity extends Permission {
+public class MainActivity extends Gps {
 
     public MainActivity(){
     }
 
-        @Override
+    // 참고한 사이트
+    // https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=bgpoilkj&logNo=221972990489
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
